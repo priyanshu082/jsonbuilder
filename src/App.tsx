@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
               <Route path="/" element={<Home />} />
             </Routes>
           </div>
-          <Footer />
+         
         </Router>
       </div>
     </ThemeProvider>

@@ -20,7 +20,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 h-[86vh] bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="flex-1 h-[92vh] bg-gradient-to-br from-background via-background to-muted/20">
       <ResizablePanelGroup direction="horizontal" className="h-full">
         <ResizablePanel defaultSize={50} minSize={30}>
           <FormComponent schema={schema} setSchema={handleSchemaChange} />
