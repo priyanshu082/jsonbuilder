@@ -122,7 +122,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
         </div>
       )}
       
-      <div className={`flex-1 space-y-3 ${level > 0 ? 'pl-6' : ''} w-full p-2 ${level === 0 ? 'overflow-y-auto' : ''}`}>
+      <div className={`flex-1 space-y-2 ${level > 0 ? 'pl-6' : ''} w-full p-2 ${level === 0 ? 'overflow-y-auto' : ''}`}>
         {schema.map((row, idx) => {
           const hasChildren = row.children && row.children.length > 0;
           const canHaveChildren = ['nested', 'array', 'objectsid'].includes(row.type);
@@ -130,10 +130,10 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
 
           return (
             <div key={row.id} className={`group relative ${level === 0 ? 'bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700' : ''}`}>
-              {/* Main Field Row */}
+              
               <div className={`flex items-center gap-3 p-4 ${level > 0 ? 'border-l-4 rounded-r-lg ' + getFieldBorderColor(row.type) : ''}`}>
                 
-                {/* Expand/Collapse Button */}
+                
                 {canHaveChildren && (
                   <button
                     onClick={() => toggleExpanded(row.id)}
@@ -198,6 +198,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                     <Trash2 className="w-4 h-4 text-red-600 dark:text-red-400" />
                   </button>
                 </div>
+
               </div>
 
               {/* Nested Children */}
