@@ -1,40 +1,37 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import FormComponent from './builder/FormComponent';
 import JsonPreview from './builder/JsonPreview';
-import { type FormValue } from '@/utils/JSON_Interface';
+import { type JSON_Interface } from '@/utils/JSON_Interface';
+
 
 const Home: React.FC = () => {
-    const [currentSchema, setCurrentSchema] = useState<FormValue>({ schema: [] });
+  const [schema, setSchema] = useState<JSON_Interface[]>([
+    {
+      id: 'field-1',
+      name: 'simpleField',
+      type: 'string',
+    }
+  ]);
 
-    const handleSchemaChange = useCallback((newSchema: FormValue) => {
-        setCurrentSchema(newSchema);
-    }, []);
+  const handleSchemaChange = (newSchema: JSON_Interface[]) => {
+    setSchema(newSchema);
+    console.log('Schema changed:', newSchema);
+  };
 
-    return (
-        <div className="container mx-auto h-[calc(100vh-120px)]">
-            <div className="flex h-full w-full items-center justify-center bg-background p-4">
-                <ResizablePanelGroup
-                    direction="horizontal"
-                    className="h-full w-full max-w-full rounded-lg border border-border shadow-lg"
-                >
-                    <ResizablePanel minSize={30}>
-                        <div className="flex h-full w-full overflow-auto p-6 bg-card rounded-l-lg">
-                            <FormComponent  />
-                            {/* <FormComponent onSchemaChange={handleSchemaChange} /> */}
-                        </div>
-                    </ResizablePanel>
-                    <ResizableHandle withHandle />
-                    <ResizablePanel minSize={30}>
-                        <div className="flex h-full w-full overflow-auto p-6 bg-card rounded-r-lg">
-                            {/* <JsonPreview schema={currentSchema} /> */}
-                            <JsonPreview />
-                        </div>
-                    </ResizablePanel>
-                </ResizablePanelGroup>
-            </div>
-        </div>
-    );
+  return (
+    <div className="flex-1 h-[86vh] bg-gradient-to-br from-background via-background to-muted/20">
+      <ResizablePanelGroup direction="horizontal" className="h-full">
+        <ResizablePanel defaultSize={50} minSize={30}>
+          <FormComponent schema={schema} setSchema={handleSchemaChange} />
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={50} minSize={30}>
+          <JsonPreview schema={schema} />
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>
+  );
 };
 
 export default Home;
