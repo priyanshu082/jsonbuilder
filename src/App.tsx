@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import Home from "./components/Home";
-import { ModeToggle } from "./components/mode-toggle";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
