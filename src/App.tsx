@@ -1,10 +1,15 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import Home from "./components/Home";
+import { ModeToggle } from "./components/mode-toggle";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme" >
-     <Home/>
+      <Navbar />
+      <Home/>
+      <Footer />
     </ThemeProvider>
   );
 }
