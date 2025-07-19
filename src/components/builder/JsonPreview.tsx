@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Copy, Download, Check, Code2 } from 'lucide-react';
 import type { JSON_Interface } from '@/utils/JSON_Interface';
-import { convertSchemaToTypeObject } from '@/utils/helper';
+//@ts-ignore
+import { convertSchemaToTypeObject } from '@/utils/Helper';
 
 interface JsonPreviewProps {
   schema: JSON_Interface[];
