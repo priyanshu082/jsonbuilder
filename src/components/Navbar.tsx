@@ -40,9 +40,15 @@ const Navbar: React.FC = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-4">
              
-              <Button variant="ghost" size="lg" className="p-2 border-[1px] ">
-                <Github className="h-4 w-4" />
-              </Button>
+              <a
+                href="https://github.com/priyanshu082/jsonbuilder"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="ghost" size="lg" className="p-2 border-[1px] ">
+                  <Github className="h-4 w-4" />
+                </Button>
+              </a>
 
               <ModeToggle/>
             </div>
@@ -73,20 +79,19 @@ const Navbar: React.FC = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t bg-background/95 backdrop-blur">
             <div className="container mx-auto px-4 py-4 space-y-2">
-              <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-foreground">
-                Documentation
-              </Button>
-              <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-foreground">
-                Examples
-              </Button>
-              <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-foreground">
-                Templates
-              </Button>
+             
               <div className="pt-2 border-t">
-                <Button variant="ghost" className="w-full justify-start">
-                  <Github className="mr-2 h-4 w-4" />
-                  GitHub Repository
-                </Button>
+                <a
+                  href="https://github.com/priyanshu082/jsonbuilder"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full block"
+                >
+                  <Button variant="ghost" className="w-full justify-start">
+                    <Github className="mr-2 h-4 w-4" />
+                    GitHub Repository
+                  </Button>
+                </a>
               </div>
             </div>
           </div>
