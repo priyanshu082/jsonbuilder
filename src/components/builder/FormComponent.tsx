@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
-import { Plus, Trash2, ChevronDown, ChevronRight, Database, List, Box, Hash, Type, Calendar, Mail, ToggleLeft } from 'lucide-react';
+import React from 'react';
+import { Plus, Trash2, Database, List, Box, Hash, Type, Calendar, Mail, ToggleLeft } from 'lucide-react';
 import type { JSON_Interface } from '@/utils/JSON_Interface';
 import { FIELD_TYPES } from '@/utils/JSON_Interface';
 import { createEmptyField } from '@/utils/JSON_Interface';
 
-// Enhanced field types with icons
-const ENHANCED_FIELD_TYPES = FIELD_TYPES.map(type => ({
-  ...type,
-  icon: type.value === 'string' ? Type :
-        type.value === 'number' ? Hash :
-        type.value === 'boolean' ? ToggleLeft :
-        type.value === 'date' ? Calendar :
-        type.value === 'email' ? Mail :
-        type.value === 'nested' ? Box :
-        type.value === 'array' ? List :
-        type.value === 'objectsid' ? Database :
-        Type
-}));
+const ICONS: Record<string, any> = {
+  string: Type,
+  number: Hash,
+  boolean: ToggleLeft,
+  date: Calendar,
+  email: Mail,
+  nested: Box,
+  array: List,
+  objectsid: Database,
+};
 
 interface FormComponentProps {
   schema: JSON_Interface[];
@@ -25,18 +22,6 @@ interface FormComponentProps {
 }
 
 const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level = 0 }) => {
-  
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
-
-  const toggleExpanded = (id: string) => {
-    const newExpanded = new Set(expandedItems);
-    if (newExpanded.has(id)) {
-      newExpanded.delete(id);
-    } else {
-      newExpanded.add(id);
-    }
-    setExpandedItems(newExpanded);
-  };
 
   const handleAddRow = () => {
     setSchema([...schema, createEmptyField()]);
@@ -52,7 +37,6 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
       children: [...(newRows[idx].children || []), createEmptyField()],
     };
     setSchema(newRows);
-    setExpandedItems(new Set([...expandedItems, newRows[idx].id]));
   };
 
   const handleNameChange = (idx: number, value: string) => {
@@ -86,9 +70,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
   };
 
   const getTypeIcon = (type: string) => {
-    const fieldType = ENHANCED_FIELD_TYPES.find(t => t.value === type);
-    const IconComponent = fieldType?.icon || Type;
-    return <IconComponent className="w-4 h-4" />;
+    const Icon = ICONS[type] || Type;
+    return <Icon className="w-4 h-4" />;
   };
 
   const getFieldBorderColor = (type: string) => {
@@ -110,43 +93,25 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                 <Database className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-foreground">
-                  Schema Builder
-                </h2>
-                <p className="text-sm text-muted-foreground">
-                  Design your JSON interface structure
-                </p>
+                <h2 className="text-lg font-semibold text-foreground">Schema Builder</h2>
+                <p className="text-sm text-muted-foreground">Design your JSON interface structure</p>
               </div>
             </div>
           </div>
         </div>
       )}
-      
+
       <div className={`flex-1 space-y-2 ${level > 0 ? 'pl-6' : ''} w-full p-2 ${level === 0 ? 'overflow-y-auto' : ''}`}>
         {schema.map((row, idx) => {
           const hasChildren = row.children && row.children.length > 0;
           const canHaveChildren = ['nested', 'array', 'objectsid'].includes(row.type);
-          const isExpanded = expandedItems.has(row.id);
 
           return (
             <div key={row.id} className={`group relative ${level === 0 ? 'bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700' : ''}`}>
-              
               <div className={`flex items-center gap-3 p-4 ${level > 0 ? 'border-l-4 rounded-r-lg ' + getFieldBorderColor(row.type) : ''}`}>
-                
-                
-                {canHaveChildren && (
-                  <button
-                    onClick={() => toggleExpanded(row.id)}
-                    className="flex-shrink-0 w-6 h-6 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center transition-colors"
-                  >
-                    {isExpanded ? (
-                      <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-300" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-300" />
-                    )}
-                  </button>
-                )}
-                
+
+                {/* (Chevron removed) */}
+
                 {/* Field Icon */}
                 <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                   {getTypeIcon(row.type)}
@@ -170,7 +135,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                     onChange={e => handleTypeChange(idx, e.target.value)}
                     className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 min-w-[120px]"
                   >
-                    {ENHANCED_FIELD_TYPES.map(typeOption => (
+                    {FIELD_TYPES.map(typeOption => (
                       <option key={typeOption.value} value={typeOption.value}>
                         {typeOption.label}
                       </option>
@@ -189,7 +154,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                       <Plus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                     </button>
                   )}
-                  
+
                   <button
                     onClick={() => handleDeleteRow(idx)}
                     className="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/50 hover:bg-red-200 dark:hover:bg-red-900/70 flex items-center justify-center transition-colors"
@@ -198,20 +163,19 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                     <Trash2 className="w-4 h-4 text-red-600 dark:text-red-400" />
                   </button>
                 </div>
-
               </div>
 
-              {/* Nested Children */}
-              {canHaveChildren && isExpanded && (
+              {/* Nested Children — always shown for container types */}
+              {canHaveChildren && (
                 <div className="pb-4">
                   <div className="mx-4 mb-2 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">
                     <div className="w-4 h-px bg-gray-300 dark:bg-gray-600"></div>
-                    {row.type === 'nested' ? 'Object Properties' : 
-                     row.type === 'array' ? 'Array Items' : 
-                     'Referenced Fields'}
+                    {row.type === 'nested' ? 'Object Properties' :
+                      row.type === 'array' ? 'Array Items' :
+                        'Referenced Fields'}
                     <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
                   </div>
-                  
+
                   {hasChildren ? (
                     <FormComponent
                       schema={row.children || []}
@@ -240,9 +204,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
         {/* Add New Field Button */}
         <button
           onClick={handleAddRow}
-          className={`w-full p-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all duration-200 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium ${
-            level === 0 ? 'mt-4' : ''
-          }`}
+          className={`w-full p-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all duration-200 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium ${level === 0 ? 'mt-4' : ''}`}
         >
           <Plus className="w-5 h-5" />
           Add New Field
