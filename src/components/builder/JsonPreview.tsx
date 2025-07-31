@@ -116,11 +116,9 @@ const JsonPreview: React.FC<JsonPreviewProps> = ({ schema }) => {
             </span>
             <span>{JSON.stringify(previewObject).length} characters</span>
           </div>
-          <div className="text-xs opacity-70">
-            Auto-generated preview
-          </div>
         </div>
       </div>
+
     </div>
   );
 };
