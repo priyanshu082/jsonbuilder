@@ -108,7 +108,7 @@ const FieldRow: React.FC<FieldRowProps> = ({
             <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
           </div>
 
-          {/* Import FormComponent here - this creates the recursive structure */}
+          
           <FormComponent
             schema={field.children || []}
             setSchema={(newChildren: JSON_Interface[]) => onNestedChange(index, newChildren)}
