@@ -12,7 +12,7 @@ interface FormComponentProps {
 
 const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level = 0 }) => {
 
-  // Handler functions - same logic as before
+ 
   const handleAddRow = () => {
     setSchema([...schema, createEmptyField()]);
   };
@@ -24,15 +24,11 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
   };
 
   const handleTypeChange = (idx: number, value: string) => {
-    const newRows = [...schema];
-    if ((value === 'nested' || value === 'array' || value === 'objectsid') && !newRows[idx].children) {
-      newRows[idx] = { ...newRows[idx], type: value as JSON_Interface['type'], children: [] };
-    } else if (value !== 'nested' && value !== 'array' && value !== 'objectsid') {
-      const { children, ...rest } = newRows[idx];
-      newRows[idx] = { ...rest, type: value as JSON_Interface['type'] };
-    } else {
-      newRows[idx] = { ...newRows[idx], type: value as JSON_Interface['type'] };
-    }
+    const newRows =[...schema]
+    const isNested=['nested','array','Objectsid'].includes(value);
+    newRows[idx]= isNested ?
+    {...newRows[idx],type :value as JSON_Interface['type'],children : newRows[idx].children || []} :
+    {...newRows[idx],type:value as JSON_Interface['type']}
     setSchema(newRows);
   };
 
@@ -97,7 +93,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
           Add New Field
         </button>
       </div>
-      
+
     </div>
   );
 };
