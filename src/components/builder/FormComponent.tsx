@@ -168,7 +168,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                 </div>
               </div>
 
-              {/* Nested Children — always shown for container types */}
+             
               {canHaveChildren && (
                 <div className="pb-4">
                   <div className="mx-4 mb-2 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">
