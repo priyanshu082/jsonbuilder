@@ -93,8 +93,12 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                 <Database className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-foreground">Schema Builder</h2>
-                <p className="text-sm text-muted-foreground">Design your JSON interface structure</p>
+                <h2 className="text-lg font-semibold text-foreground">
+                  Schema Builder
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Design your JSON interface structure
+                </p>
               </div>
             </div>
           </div>
@@ -103,14 +107,13 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
 
       <div className={`flex-1 space-y-2 ${level > 0 ? 'pl-6' : ''} w-full p-2 ${level === 0 ? 'overflow-y-auto' : ''}`}>
         {schema.map((row, idx) => {
-          const hasChildren = row.children && row.children.length > 0;
+          const hasChildren = !!(row.children && row.children.length > 0);
           const canHaveChildren = ['nested', 'array', 'objectsid'].includes(row.type);
 
           return (
             <div key={row.id} className={`group relative ${level === 0 ? 'bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700' : ''}`}>
-              <div className={`flex items-center gap-3 p-4 ${level > 0 ? 'border-l-4 rounded-r-lg ' + getFieldBorderColor(row.type) : ''}`}>
 
-                {/* (Chevron removed) */}
+              <div className={`flex items-center gap-3 p-4 ${level > 0 ? 'border-l-4 rounded-r-lg ' + getFieldBorderColor(row.type) : ''}`}>
 
                 {/* Field Icon */}
                 <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
@@ -183,16 +186,9 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                       level={level + 1}
                     />
                   ) : (
+                    // Removed: Add-first-field button. Showing only a passive placeholder.
                     <div className="mx-4 py-8 text-center text-gray-400 dark:text-gray-500 text-sm">
                       No fields added yet
-                      <div className="mt-2">
-                        <button
-                          onClick={() => handleAddNestedRow(idx)}
-                          className="text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs font-medium"
-                        >
-                          Add first field
-                        </button>
-                      </div>
                     </div>
                   )}
                 </div>
