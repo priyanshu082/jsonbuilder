@@ -100,7 +100,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
           return (
             <div key={row.id} className={`group relative ${level === 0 ? 'bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700' : ''}`}>
 
-              <div className={`flex items-center gap-3 p-4 ${level > 0 ? 'border-l-4 rounded-r-lg ' + getFieldBorderColor(row.type) : ''}`}>
+              <div className={`flex items-center gap-3 p-4 ${'border-l-4 rounded-r-lg ' + getFieldBorderColor(row.type) }`}>
 
                 {/* Field Icon */}
                 <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
