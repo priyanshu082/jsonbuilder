@@ -64,10 +64,10 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
 
   const getFieldBorderColor = (type: string) => {
     switch (type) {
-      case 'nested': return 'border-l-blue-400 bg-blue-50/30 dark:border-l-blue-500 dark:bg-blue-950/30';
-      case 'array': return 'border-l-green-400 bg-green-50/30 dark:border-l-green-500 dark:bg-green-950/30';
-      case 'objectsid': return 'border-l-purple-400 bg-purple-50/30 dark:border-l-purple-500 dark:bg-purple-950/30';
-      default: return 'border-l-gray-300 bg-gray-50/30 dark:border-l-gray-600 dark:bg-gray-800/30';
+      case 'nested': return 'border-l-blue-400 bg-blue-50/30 dark:border-l-blue-500 dark:bg-blue-900/20';
+      case 'array': return 'border-l-green-400 bg-green-300 dark:border-l-green-500 dark:bg-green-900/20';
+      case 'objectsid': return 'border-l-purple-400 bg-purple-50/30 dark:border-l-purple-500 dark:bg-purple-900/20';
+      default: return 'border-l-gray-300 bg-gray-50/30 dark:border-l-gray-600 dark:bg-gray-700/30';
     }
   };
 
