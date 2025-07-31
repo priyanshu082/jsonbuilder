@@ -27,18 +27,6 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
     setSchema([...schema, createEmptyField()]);
   };
 
-  const handleAddNestedRow = (idx: number) => {
-    const newRows = [...schema];
-    if (!newRows[idx].children) {
-      newRows[idx].children = [];
-    }
-    newRows[idx] = {
-      ...newRows[idx],
-      children: [...(newRows[idx].children || []), createEmptyField()],
-    };
-    setSchema(newRows);
-  };
-
   const handleNameChange = (idx: number, value: string) => {
     const newRows = [...schema];
     newRows[idx] = { ...newRows[idx], name: value };
@@ -107,7 +95,6 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
 
       <div className={`flex-1 space-y-2 ${level > 0 ? 'pl-6' : ''} w-full p-2 ${level === 0 ? 'overflow-y-auto' : ''}`}>
         {schema.map((row, idx) => {
-          const hasChildren = !!(row.children && row.children.length > 0);
           const canHaveChildren = ['nested', 'array', 'objectsid'].includes(row.type);
 
           return (
@@ -146,18 +133,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                   </select>
                 </div>
 
-                {/* Action Buttons */}
+               
                 <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  {canHaveChildren && (
-                    <button
-                      onClick={() => handleAddNestedRow(idx)}
-                      className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/50 hover:bg-blue-200 dark:hover:bg-blue-900/70 flex items-center justify-center transition-colors"
-                      title={`Add ${row.type === 'array' ? 'Array Item' : 'Nested Field'}`}
-                    >
-                      <Plus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                    </button>
-                  )}
-
                   <button
                     onClick={() => handleDeleteRow(idx)}
                     className="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/50 hover:bg-red-200 dark:hover:bg-red-900/70 flex items-center justify-center transition-colors"
@@ -179,18 +156,11 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
                     <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
                   </div>
 
-                  {hasChildren ? (
-                    <FormComponent
+                  <FormComponent
                       schema={row.children || []}
                       setSchema={newChildren => handleNestedChange(idx, newChildren)}
                       level={level + 1}
                     />
-                  ) : (
-                    // Removed: Add-first-field button. Showing only a passive placeholder.
-                    <div className="mx-4 py-8 text-center text-gray-400 dark:text-gray-500 text-sm">
-                      No fields added yet
-                    </div>
-                  )}
                 </div>
               )}
             </div>
@@ -200,7 +170,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ schema, setSchema, level 
         {/* Add New Field Button */}
         <button
           onClick={handleAddRow}
-          className={`w-full p-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all duration-200 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium ${level === 0 ? 'mt-4' : ''}`}
+          className={`w-full p-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all duration-200 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium `}
         >
           <Plus className="w-5 h-5" />
           Add New Field
