@@ -1,13 +1,13 @@
 import type { JSON_Interface } from "./JSON_Interface";
 
-type TypeObject = Record<string, any>;
+type TypeObject = Record<string, JSON_Interface['type']>;
 
 
 export const convertSchemaToTypeObject = (fields: JSON_Interface[]): TypeObject => {
     return fields.reduce((result, field) => {
         if (!field.name) return result;
         result[field.name] = getFieldValue(field);
-        return result;
+        return result
     }, {} as TypeObject);
 };
 
@@ -37,6 +37,6 @@ export const getArrayItemValue = (child: JSON_Interface): any => {
     return child.name ? { [child.name]: child.type } : child.type;
 };
 
-const hasChildren = (field: JSON_Interface): field is JSON_Interface & { children: JSON_Interface[] } => {
+const hasChildren = (field : JSON_Interface) : boolean => {
     return Array.isArray(field.children) && field.children.length > 0;
 };
