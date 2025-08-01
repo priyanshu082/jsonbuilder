@@ -2,19 +2,6 @@ import type { JSON_Interface } from "./JSON_Interface";
 
 type TypeObject = Record<string, any>;
 
-export const generateId = (): string => {
-    return (
-        Date.now().toString(36) +
-        Math.random().toString(36).substring(2, 10)
-    );
-};
-
-export const createEmptyField = (): JSON_Interface => ({
-    id: Date.now().toString(36) + Math.random().toString(36).substring(2, 10),
-    name: '',
-    type: 'string',
-    children: undefined,
-});
 
 export const convertSchemaToTypeObject = (fields: JSON_Interface[]): TypeObject => {
     return fields.reduce((result, field) => {
