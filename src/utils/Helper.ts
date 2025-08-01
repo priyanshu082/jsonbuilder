@@ -34,7 +34,7 @@ export const getArrayItemValue = (child: JSON_Interface): any => {
     if (child.type === 'objectsid' && hasChildren(child)) {
         return convertSchemaToTypeObject(child.children!);
     }
-    return child.name ? { [child.name]: child.type } : child.type;
+    return { [child.name]: child.type };
 };
 
 const hasChildren = (field : JSON_Interface) : boolean => {
